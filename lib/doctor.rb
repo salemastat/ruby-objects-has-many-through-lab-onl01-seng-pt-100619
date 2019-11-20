@@ -8,9 +8,29 @@ class Doctor
     @@all << self
   end
 
-  def appointments
-    Appointment.all.select {|appointment| appointment.doctor == self}
+ class Doctor
+  attr_accessor :name, :appointments
+
+  def initialize(name)
+    @name = name
+    @appointments = []
   end
+
+  def add_appointment(appointment)
+    @appointments << appointment
+    appointment.doctor = self
+  end
+
+  def appointments
+    @appointments
+  end
+
+  def patients
+    self.appointments.collect do |appointment|
+      appointment.patient
+    end
+  end
+end
 
   def patients
     appointments.map {|appointment| appointment.patient}
